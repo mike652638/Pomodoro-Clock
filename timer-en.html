@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Timer by mike652638</title>
+    <style type="text/css">
+    body {
+        background-color: #333333;
+        color: white;
+        font-family: "Microsoft Yahei", "arail", "sans serif";
+        font-weight: bold;
+        text-align: center;
+        min-width: 310px;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .switch {
+        width: 120px;
+        margin: 10px auto;
+    }
+    
+    .en,
+    .cn {
+        float: left;
+        width: 60px;
+        text-decoration: none;
+        color: #CA394A;
+    }
+    
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .en {
+        background-color: #CCFFFF;
+    }
+    
+    .cn {
+        background-color: #CA394A;
+        color: #CCFFFF;
+    }
+    
+    h2,
+    h3 {
+        font-family: "Lucida Calligraphy";
+        margin: 10px 0;
+        clear: both;
+    }
+    
+    .timer-control {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .timer-title {
+        display: block;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+    
+    .timer-work,
+    .timer-break {
+        float: left;
+        margin: 0 20px;
+    }
+    
+    .time-show {
+        border: 2px solid #fff;
+        display: inline-block;
+        font-size: 24px;
+        margin: 6px -5px 0;
+        padding: 0 10px;
+    }
+    
+    .timer-control input {
+        border: 1px;
+        font-size: 29px;
+    }
+    
+    .circle {
+        width: 290px;
+        height: 290px;
+        border: 1px solid #fff;
+        margin: 60px auto 0 auto;
+        border-radius: 50%;
+        background-color: #E67E22;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .circle-bg {
+        width: 290px;
+        height: 290px;
+        position: absolute;
+        background-color: #3784CB;
+    }
+    
+    .time-left {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -76px;
+        margin-top: -60px;
+        font-size: 20px;
+    }
+    
+    #minsNum,
+    #secsNum,
+    #workOrBreak {
+        color: #660033;
+        font-size: 32px;
+    }
+    
+    #work-minus,
+    #work-plus,
+    #break-minus,
+    #break-plus {
+        font-size: 29px;
+    }
+    
+    .footer {
+        margin-top: 30px;
+        font-size: 1em;
+        text-align: center;
+    }
+    
+    .footer a {
+        color: #0080FF;
+        background-color: #fff;
+        padding: 6px;
+        text-decoration: none;
+        box-shadow: 2px 2px 10px #ddd;
+    }
+    
+    .footer a:hover {
+        color: #FFF;
+        background-color: #0080FF;
+        box-shadow: 2px 2px 20px #3784CB;
+    }
+    
+    @media screen and (max-width: 650px) {
+        .circle {
+            margin-top: 20px;
+        }
+        #work-reset,
+        #break-reset,
+        #work-start,
+        #break-start {
+            display: block;
+            margin: 10px auto 0 auto
+        }
+    }
+    
+    @media screen and (max-width: 410px) {
+        .time-show {
+            font-size: 16px;
+            padding: 0 2px;
+        }
+        #work-reset,
+        #break-reset,
+        #work-start,
+        #break-start {
+            font-size: 20px;
+        }
+        #work-minus,
+        #work-plus,
+        #break-minus,
+        #break-plus {
+            font-size: 20px;
+        }
+        .timer-title {
+            font-size: 22px;
+        }
+        .break1 {
+            display: block;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="switch">
+        <a href="https://www.mike652638.com/projects/timer-en.html" class="en">EN</a>
+        <a href="https://www.mike652638.com/projects/timer-cn.html" class="cn">中文</a>
+    </div>
+    <br>
+    <h2>Counting Down Timer</h2>
+    <h3> -- <a href="https://www.mike652638.com" target="_blank">mike652638</a> --</h3>
+    <div class="timer-control">
+        <div class="timer-work">
+            <span class="timer-title">WORKING LENGTH</span>
+            <input type="button" name="reset" value="R" id="work-reset">
+            <input type="button" name="minus" value="-" id="work-minus">
+            <span id="work-time" class="time-show">3 Min</span>
+            <input type="button" name="plus" value="+" id="work-plus">
+            <input type="button" name="start" value="S" id="work-start">
+        </div>
+        <div class="timer-break">
+            <span class="timer-title">BREAKING LENGTH</span>
+            <input type="button" name="reset" value="R" id="break-reset">
+            <input type="button" name="minus" value="-" id="break-minus">
+            <span id="break-time" class="time-show">2 Min</span>
+            <input type="button" name="plus" value="+" id="break-plus">
+            <input type="button" name="start" value="S" id="break-start">
+        </div>
+    </div>
+    <div class="timer-show">
+        <div class="circle">
+            <div id="circle-bg" class="circle-bg">
+            </div>
+            <div class="time-left">
+                <span id="workOrBreak">Working</span>
+                <br>Time&nbsp;Left
+                <br>
+                <span id="minsNum">3</span>&nbsp;Mins
+                <span id="secsNum">0</span>&nbsp;Secs
+            </div>
+        </div>
+    </div>
+    <p class="footer">
+        <a target="_blank" href="https://www.mike652638.com/timer-code">Welcome to visit my website to view the Source Code</a>
+    </p>
+    <script type="text/javascript">
+    var timeWork = document.getElementById("work-time").innerText.split(" ")[0] - 0,
+        timeBreak = document.getElementById("break-time").innerText.split(" ")[0] - 0;
+    var timeLeft,
+        timeRange,
+        minsNum,
+        secsNum;
+    var chkHeight,
+        minusHeight;
+
+    document.getElementById("work-minus").onclick = function() {
+        if (timeWork > 1) {
+            timeWork -= 1;
+        } else {
+            alert("倒计时时间请设定在1到10分钟之间");
+        }
+        document.getElementById("work-time").innerText = timeWork + " Min";
+    };
+
+    document.getElementById("work-plus").onclick = function() {
+        if (timeWork < 10) {
+            timeWork += 1;
+        } else {
+            alert("倒计时时间请设定在1到10分钟之间");
+        }
+        document.getElementById("work-time").innerText = timeWork + " Min";
+    };
+
+    document.getElementById("work-reset").onclick = function() {
+        timeWork = 3;
+        document.getElementById("work-time").innerText = timeWork + " Min";
+    };
+
+    document.getElementById("break-minus").onclick = function() {
+        if (timeBreak > 1) {
+            timeBreak -= 1;
+        } else {
+            alert("倒计时时间请设定在1到10分钟之间");
+        }
+        document.getElementById("break-time").innerText = timeBreak + " Min";
+    };
+
+    document.getElementById("break-plus").onclick = function() {
+        if (timeBreak < 10) {
+            timeBreak += 1;
+        } else {
+            alert("倒计时时间请设定在1到10分钟之间");
+        }
+        document.getElementById("break-time").innerText = timeBreak + " Min";
+    };
+
+    document.getElementById("break-reset").onclick = function() {
+        timeWork = 2;
+        document.getElementById("break-time").innerText = timeWork + " Min";
+    };
+
+    function timerNum() {
+        minsNum = Math.floor(timeLeft / 60);
+        secsNum = timeLeft - minsNum * 60;
+        document.getElementById("minsNum").innerText = minsNum;
+        document.getElementById("secsNum").innerText = secsNum;
+    }
+
+    function timerBegin() {
+        workToBreak();
+        timeLeft -= 1;
+        chkHeight -= minusHeight;
+        document.getElementById("circle-bg").style.height = chkHeight + "px";
+        timerNum();
+    }
+
+    var workStatus, breakStatus, workBegin, breakBegin, workStart, breakStart;
+
+
+    workStart = function() {
+        document.getElementById("break-start").value = "S";
+        clearInterval(breakBegin);
+        chkHeight = 290;
+        chkWidth = 290;
+        timeRange = timeWork * 60;
+        minusHeight = chkHeight / timeRange;
+        minusWidth = chkWidth / timeRange;
+
+        document.getElementById("circle-bg").style.backgroundColor = "#3784CB";
+        document.getElementById("workOrBreak").innerText = "Working";
+        workStatus = document.getElementById("work-start").value;
+
+        if (workStatus === "S") {
+            if (breakStatus === "P") {
+                clearInterval(breakBegin);
+            }
+            document.getElementById("work-start").value = "P";
+            timeLeft = timeWork * 60;
+
+            workBegin = setInterval(timerBegin, 1000);
+        } else if (workStatus === "P") {
+            document.getElementById("work-start").value = "S";
+            clearInterval(workBegin);
+        }
+
+    };
+    document.getElementById("work-start").onclick = workStart;
+
+    breakStart = function() {
+        document.getElementById("work-start").value = "S";
+        clearInterval(workBegin);
+        chkHeight = 290;
+        chkWidth = 290;
+        timeRange = timeBreak * 60;
+        minusHeight = chkHeight / timeRange;
+        minusWidth = chkWidth / timeRange;
+
+        document.getElementById("circle-bg").style.backgroundColor = "#CA394A";
+        document.getElementById("workOrBreak").innerText = "Breaking";
+        breakStatus = document.getElementById("break-start").value;
+
+        if (breakStatus === "S") {
+            if (workStatus === "P") {
+                clearInterval(workBegin);
+            }
+            document.getElementById("break-start").value = "P";
+            timeLeft = timeBreak * 60;
+
+            breakBegin = setInterval(timerBegin, 1000);
+        } else if (breakStatus === "P") {
+            document.getElementById("break-start").value = "S";
+            clearInterval(breakBegin);
+        }
+
+    };
+    document.getElementById("break-start").onclick = breakStart;
+
+    function workToBreak() {
+        if (timeLeft === 0) {
+            if (document.getElementById("workOrBreak").innerText === "Working") {
+                breakStart();
+            } else if (document.getElementById("workOrBreak").innerText === "Breaking") {
+                workStart();
+            }
+        }
+
+    }
+    </script>
+</body>
+
+</html>
